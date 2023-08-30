@@ -5,18 +5,40 @@ let instructions = document.querySelector('.instructions');
 let youTube = document.querySelector('.youtube');
 let newRecipe = document.querySelector('.new-recipe');
 
+
 function getData() {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
     nameOfMeal.textContent = response.data.meals[0].strMeal
     instructions.textContent = response.data.meals[0].strInstructions
-    //ingredients.textContent = response.data.meals[0].strIngredient1
+    
+    let mealData = Object.entries(response.data.meals[0])
+    let arrayOfIngredients = [];
+
+    for(let i = 0; i < mealData.length; i++) {
+      if([i] > 8 && [i] < 29) {
+        arrayOfIngredients.push(mealData[i])   
+      }
+    }
+    
+    let newArrayOfIngredients = arrayOfIngredients.map((item) => {
+      let [first, second] = item
+      return second
+    })
+
+    for(let i = 0; i < newArrayOfIngredients.length; i++) {
+      if(newArrayOfIngredients[i] === '') {
+        newArrayOfIngredients.splice(i)
+        ingredients.textContent = newArrayOfIngredients.join(', ')
+      }
+    }
   })
 }
 
-function array () {
+/*function array () {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
     let result = Object.entries(response.data.meals[0])
     let arrayOfIngredients = [];
+
 
     for(let i = 0; i < result.length; i++) {
       if([i] > 8 && [i] < 29) {
@@ -29,11 +51,15 @@ function array () {
       return second
     })
 
-    console.log(newArrayOfIngredients)
-
+    for(let i = 0; i < newArrayOfIngredients.length; i++) {
+      if(newArrayOfIngredients[i] === '') {
+        newArrayOfIngredients.splice(i)
+        ingredients.textContent = newArrayOfIngredients
+      }
+    }
   })
   
-}
+}*/
 
 /*let ages = [1, 2, 3, 4, 5, 6, 7]; 
 let array = [];
