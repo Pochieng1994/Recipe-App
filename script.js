@@ -1,15 +1,19 @@
 let mealImage = document.querySelector('.meal-image');
+let image = document.querySelector('.image');
 let nameOfMeal = document.querySelector('.name-of-meal');
 let ingredients = document.querySelector('.ingredients');
 let instructions = document.querySelector('.instructions');
-let youTube = document.querySelector('.youtube');
-let newRecipe = document.querySelector('.new-recipe');
+let youTubeButton = document.querySelector('.youtube');
+let newRecipeButton = document.querySelector('.new-recipe');
 
 
 function getData() {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
     nameOfMeal.textContent = response.data.meals[0].strMeal
+    image.setAttribute('src', response.data.meals[0].strMealThumb)
     instructions.textContent = response.data.meals[0].strInstructions
+    let urlData = response.data.meals[0].strYoutube
+
     
     let mealData = Object.entries(response.data.meals[0])
     let arrayOfIngredients = [];
@@ -31,8 +35,19 @@ function getData() {
         ingredients.textContent = newArrayOfIngredients.join(', ')
       }
     }
+
+
+    
+    youTubeButton.addEventListener('click', () => {
+     window.open(urlData, '_blank')
+    })
   })
+  .catch(function(error) {
+    console.log(error);
+  }) 
 }
+
+
 
 /*function array () {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
