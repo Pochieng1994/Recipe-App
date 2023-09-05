@@ -7,7 +7,7 @@ let youTubeButton = document.querySelector('.youtube');
 let newRecipeButton = document.querySelector('.new-recipe');
 
 
-function getData() {
+function displayRecipe() {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
     nameOfMeal.textContent = response.data.meals[0].strMeal
     image.setAttribute('src', response.data.meals[0].strMealThumb)
@@ -15,17 +15,17 @@ function getData() {
     let urlData = response.data.meals[0].strYoutube
 
     
-    let mealData = Object.entries(response.data.meals[0])
+    let mealData = Object.entries(response.data.meals[0]) 
     let arrayOfIngredients = [];
 
-    for(let i = 0; i < mealData.length; i++) {
+    for(let i = 0; i < mealData.length; i++) { 
       if([i] > 8 && [i] < 29) {
         arrayOfIngredients.push(mealData[i])   
       }
     }
     
     let newArrayOfIngredients = arrayOfIngredients.map((item) => {
-      let [first, second] = item
+      let [first, second] = item 
       return second
     })
 
@@ -36,16 +36,25 @@ function getData() {
       }
     }
 
-
-    
     youTubeButton.addEventListener('click', () => {
      window.open(urlData, '_blank')
-    })
+  })
   })
   .catch(function(error) {
     console.log(error);
   }) 
 }
+
+newRecipeButton.addEventListener('click', () => {
+  displayRecipe()
+})
+
+displayRecipe()
+
+
+
+
+
 
 
 
