@@ -11,15 +11,25 @@ youtubeLink.textContent = 'Youtube Video'
 anchorDiv.appendChild(youtubeLink)
 
 
-
 function displayRecipe() {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
     nameOfMeal.textContent = response.data.meals[0].strMeal
     image.setAttribute('src', response.data.meals[0].strMealThumb)
     instructions.textContent = response.data.meals[0].strInstructions
-    youtubeLink.setAttribute('href', response.data.meals[0].strYoutube)
-    youtubeLink.setAttribute('target', '_blank')
+    
+    let anchortagAtrributes = {
+      href: response.data.meals[0].strYoutube,
+      target: '_blank',
+    }
 
+    function setAttributesOnAnchor() {
+      Object.keys(anchortagAtrributes).forEach(attribute => {
+        youtubeLink.setAttribute(attribute, anchortagAtrributes[attribute])
+      }
+      )
+    }
+
+    setAttributesOnAnchor()
 
     
     let mealData = Object.entries(response.data.meals[0]) 
