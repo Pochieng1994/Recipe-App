@@ -16,7 +16,7 @@ function setAttributesOnAnchor(element, elementAttributes) {
         element.setAttribute(attribute, elementAttributes[attribute])
       }
       )
-    }
+}
 
 
 function displayRecipe() {
