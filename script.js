@@ -7,32 +7,33 @@ let anchorDiv =document.querySelector('.anchorDiv');
 let youtubeLink = document.createElement('a');
 let newRecipeButton = document.querySelector('.new-recipe');
 
-youtubeLink.textContent = 'Youtube Video'
-anchorDiv.appendChild(youtubeLink)
+youtubeLink.textContent = 'Youtube Video';
+anchorDiv.appendChild(youtubeLink);
+
+
+function setAttributesOnAnchor(element, elementAttributes) {
+      Object.keys(elementAttributes).forEach(attribute => {
+        element.setAttribute(attribute, elementAttributes[attribute])
+      }
+      )
+    }
 
 
 function displayRecipe() {
   axios.get('https://www.themealdb.com/api/json/v1/1/random.php').then(response => {
-    nameOfMeal.textContent = response.data.meals[0].strMeal
-    image.setAttribute('src', response.data.meals[0].strMealThumb)
-    instructions.textContent = response.data.meals[0].strInstructions
+    nameOfMeal.textContent = response.data.meals[0].strMeal;
+    image.setAttribute('src', response.data.meals[0].strMealThumb);
+    instructions.textContent = response.data.meals[0].strInstructions;
     
     let anchortagAtrributes = {
       href: response.data.meals[0].strYoutube,
       target: '_blank',
     }
 
-    function setAttributesOnAnchor() {
-      Object.keys(anchortagAtrributes).forEach(attribute => {
-        youtubeLink.setAttribute(attribute, anchortagAtrributes[attribute])
-      }
-      )
-    }
-
-    setAttributesOnAnchor()
+    setAttributesOnAnchor(youtubeLink, anchortagAtrributes)
 
     
-    let mealData = Object.entries(response.data.meals[0]) 
+    let mealData = Object.entries(response.data.meals[0]);
     let arrayOfIngredients = [];
 
     for(let i = 0; i < mealData.length; i++) { 
@@ -42,14 +43,14 @@ function displayRecipe() {
     }
     
     let newArrayOfIngredients = arrayOfIngredients.map((item) => {
-      let [first, second] = item 
-      return second
+      let [first, second] = item;
+      return second;
     })
 
     for(let i = 0; i < newArrayOfIngredients.length; i++) {
       if(newArrayOfIngredients[i] === '') {
-        newArrayOfIngredients.splice(i)
-        ingredients.textContent = newArrayOfIngredients.join(', ')
+        newArrayOfIngredients.splice(i);
+        ingredients.textContent = newArrayOfIngredients.join(', ');
       }
     }
 
