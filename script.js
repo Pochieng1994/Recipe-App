@@ -11,12 +11,13 @@ youtubeLink.textContent = 'Youtube Video';
 anchorDiv.appendChild(youtubeLink);
 
 
-function setAttributesOnAnchor(element, elementAttributes) {
+function setAttributesOnAnchor(elementAttributes) {
       Object.keys(elementAttributes).forEach(attribute => {
-        element.setAttribute(attribute, elementAttributes[attribute])
+        youtubeLink.setAttribute(attribute, elementAttributes[attribute])
       }
       )
 }
+
 
 
 function displayRecipe() {
@@ -30,9 +31,9 @@ function displayRecipe() {
       target: '_blank',
     }
 
-    setAttributesOnAnchor(youtubeLink, anchortagAtrributes)
+    setAttributesOnAnchor(anchortagAtrributes);
 
-    
+
     let mealData = Object.entries(response.data.meals[0]);
     let arrayOfIngredients = [];
 
@@ -53,7 +54,6 @@ function displayRecipe() {
         ingredients.textContent = newArrayOfIngredients.join(', ');
       }
     }
-
   })
   .catch(function(error) {
     console.log(error);
